@@ -1,6 +1,3 @@
-// CalculadoraPosFixada.cpp : Defines the entry point for the console application.
-//
-
 #include "stdafx.h"
 #include <stdlib.h>
 #include <stdio.h>
@@ -24,27 +21,27 @@ typedef struct lista {
 
 typedef struct pilha {
 	Lista *top;
-}Pilha;
+}Stack;
 
-Pilha* FactoryStack()
+Stack* FactoryStack()
 {
-	Pilha* p = (Pilha*)malloc(sizeof(Pilha));
+	Stack* p = (Stack*)malloc(sizeof(Stack));
 	p->top = NULL;
 	return p;
 }
 
-void Push(Pilha* pilha, float newValue) {
+void Push(Stack* pilha, float newValue) {
 	Lista* novo = (Lista*)malloc(sizeof(Lista));
 	novo->value = newValue;
 	novo->next = pilha->top;
 	pilha->top = novo;
 }
 
-bool IsEmptyStack(Pilha* pilha) {
+bool IsEmptyStack(Stack* pilha) {
 	return (pilha->top == NULL);
 }
 
-int Count(Pilha * stack) {
+int Count(Stack * stack) {
 
 	Lista* element;
 	int count = 0;
@@ -61,7 +58,7 @@ int Count(Pilha * stack) {
 	return count;
 }
 
-float Pop(Pilha* pilha) {
+float Pop(Stack* pilha) {
 	Lista* t;
 	float topValue;
 
@@ -79,7 +76,7 @@ float Pop(Pilha* pilha) {
 	}
 }
 
-void ClearStack(Pilha* pilha) {
+void ClearStack(Stack* pilha) {
 	if (!IsEmptyStack(pilha)) {
 
 		Lista* currentTop = pilha->top;
@@ -93,7 +90,7 @@ void ClearStack(Pilha* pilha) {
 	}
 }
 
-void PrintStack(Pilha* stack) {
+void PrintStack(Stack* stack) {
 	Lista* element;
 
 	if (IsEmptyStack(stack)) {
@@ -113,7 +110,7 @@ void ClearScreen() {
 	system("cls");//So funciona Windows, mudar isso 
 }
 
-void ReadNumber(Pilha* stack) {
+void ReadNumber(Stack* stack) {
 	printf("Digite um numero: \n");
 	float num;
 	scanf_s("%f", &num);
@@ -152,7 +149,7 @@ OPERATION ReadOperation() {
 
 }
 
-void Sun(Pilha *stack) {
+void Sun(Stack *stack) {
 
 	if (Count(stack) < 2) {
 		printf("Elementos insuficientes pra calcular\n");
@@ -165,7 +162,7 @@ void Sun(Pilha *stack) {
 	}
 }
 
-void Subtraction(Pilha* stack) {
+void Subtraction(Stack* stack) {
 
 	if (Count(stack) < 2) {
 		printf("Elementos insuficientes pra calcular\n");
@@ -178,7 +175,7 @@ void Subtraction(Pilha* stack) {
 	}
 }
 
-void Multiplication(Pilha* stack) {
+void Multiplication(Stack* stack) {
 	if (Count(stack) < 2) {
 		printf("Elementos insuficientes pra calcular\n");
 	}
@@ -193,7 +190,7 @@ void Multiplication(Pilha* stack) {
 	}
 }
 
-void Division(Pilha * stack) {
+void Division(Stack * stack) {
 	if (Count(stack) < 2) {
 		printf("Elementos insuficientes pra calcular\n");
 	}
@@ -213,7 +210,7 @@ void Division(Pilha * stack) {
 	}
 }
 
-void Exponentiation(Pilha* stack) {
+void Exponentiation(Stack* stack) {
 	if (Count(stack) < 1) {
 		printf("Elementos insuficientes pra calcular\n");
 	}
@@ -227,7 +224,7 @@ void Exponentiation(Pilha* stack) {
 	}
 }
 
-void Calculate(Pilha * stack, OPERATION op) {
+void Calculate(Stack * stack, OPERATION op) {
 	switch (op)
 	{
 	case SUN:
@@ -267,7 +264,7 @@ void Menu() {
 }
 
 
-bool ReadOptionMenu(Pilha* stack) {
+bool ReadOptionMenu(Stack* stack) {
 	Menu();
 	char option;
 	OPERATION op;
@@ -307,13 +304,14 @@ bool ReadOptionMenu(Pilha* stack) {
 
 int main()
 {
-	Pilha * myStack = FactoryStack();
+	Stack * myStack = FactoryStack();
 	bool run = true;
 	do
 	{
 		run = ReadOptionMenu(myStack);
 
 	} while (run);
+	
 
 	system("pause");
 	return 0;
